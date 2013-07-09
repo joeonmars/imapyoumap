@@ -181,3 +181,78 @@ textarea {
   height: 100%;
   overflow: hidden;
 }
+
+.rectangle {
+  position: absolute;
+  outline: 1px solid red;
+}
+.rectangle > .vertexContainer {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+.rectangle > .vertexContainer > div {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: red;
+  cursor: pointer;
+  -webkit-border-radius: 100%;
+  -moz-border-radius: 100%;
+  -ms-border-radius: 100%;
+  -o-border-radius: 100%;
+  border-radius: 100%;
+  -webkit-transform: translate(-5px, -5px);
+  -moz-transform: translate(-5px, -5px);
+  -ms-transform: translate(-5px, -5px);
+  -o-transform: translate(-5px, -5px);
+  transform: translate(-5px, -5px);
+}
+.rectangle > .vertexContainer > div:hover, .rectangle > .vertexContainer > div.active {
+  background: lightgreen;
+}
+.rectangle > .contentContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(225, 0, 0, 0.2);
+}
+
+#playground {
+  width: 100%;
+  height: 100%;
+}
+#playground > .outer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+#playground > .outer > .inner {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+}
+#playground > .outer > .inner > .toolsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#playground > .outer > .inner > .toolsContainer > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+#playground > .outer > .inner > .contentContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+#click-drag-tool > .mockRectangle {
+  position: absolute;
+  outline: 1px dotted gray;
+}

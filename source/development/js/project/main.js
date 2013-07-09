@@ -8,6 +8,7 @@ goog.require('soy');
 goog.require('imym.templates');
 goog.require('imym.controllers.NavigationController');
 goog.require('imym.controllers.WindowController');
+goog.require('imym.views.Playground');
 
 
 // define global paths
@@ -27,6 +28,8 @@ imym.main = function() {
 imym.main.create = function(e) {
 	imym.main.controllers.navigationController = imym.controllers.NavigationController.getInstance();
 	imym.main.controllers.windowController = imym.controllers.WindowController.getInstance();
+
+	imym.main.views.playground = new imym.views.Playground();
 };
 
 imym.main.controllers = {};
