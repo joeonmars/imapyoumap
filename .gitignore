@@ -1,0 +1,5 @@
+*.sublime-project
+*.sublime-workspace
+*.psd
+.sass-cache
+.DS_Store

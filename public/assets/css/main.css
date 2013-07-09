@@ -1,0 +1,183 @@
+@import url(http://fonts.googleapis.com/css?family=Poly:400,400italic);
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+@font-face {
+  font-family: "barkentina_1regular";
+  src: url("../font/barkentina/barkentina.eot");
+  src: url("../font/barkentina/barkentina.eot?#iefix") format("embedded-opentype"), url("../font/barkentina/barkentina.woff") format("woff"), url("../font/barkentina/barkentina.ttf") format("truetype"), url("../font/barkentina/barkentina.svg#barkentina_1regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MyriadPro-Regular";
+  src: url("../font/myriadpro/MYRIADPRO-REGULAR.eot");
+  src: url("../font/myriadpro/MYRIADPRO-REGULAR.woff") format("woff"), url("../font/myriadpro/MYRIADPRO-REGULAR.svg#MyriadPro-Regular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "MyriadPro-BoldCond";
+  src: url("../font/myriadpro/MYRIADPRO-BOLDCOND.eot");
+  src: url("../font/myriadpro/MYRIADPRO-BOLDCOND.woff") format("woff"), url("../font/myriadpro/MYRIADPRO-BOLDCOND.svg#MyriadPro-BoldCond") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon-sprite, .icon-joeonmars {
+  background: url('../images/icon-s970455cb1a.png') no-repeat;
+}
+
+.icon-joeonmars {
+  background-position: 0 0;
+  height: 10px;
+  width: 10px;
+}
+
+html, body {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+html.touch *, body.touch * {
+  outline: none;
+  outline-style: none;
+  -webkit-touch-callout: none;
+  /* disable callout, image save panel */
+  -webkit-tap-highlight-color: transparent;
+  /* "turn off" link highlight */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
+body {
+  min-width: 768px;
+  min-height: 640px;
+  font-family: "MyriadPro-Regular", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2 {
+  font-family: "barkentina_1regular", serif;
+}
+
+h3, h4, h5, h6 {
+  font-family: "MyriadPro-Regular", sans-serif;
+}
+
+p {
+  font-family: "Poly", serif;
+}
+
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: #747484;
+}
+
+i {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+textarea {
+  resize: none;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(50%, #595968), color-stop(50%, #4f4f5d));
+  background: -webkit-linear-gradient(left, #595968 50%, #4f4f5d 50%);
+  background: -moz-linear-gradient(left, #595968 50%, #4f4f5d 50%);
+  background: -o-linear-gradient(left, #595968 50%, #4f4f5d 50%);
+  background: linear-gradient(left, #595968 50%, #4f4f5d 50%);
+}
+
+.button {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: pointer;
+  text-align: center;
+}
+
+.centerColumn {
+  margin: 0 auto;
+  max-width: 1280px;
+}
+
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
