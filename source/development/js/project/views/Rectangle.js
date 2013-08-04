@@ -27,6 +27,11 @@ imym.views.Rectangle = function(parent, position, size){
 
   goog.dom.appendChild(parent, this.domElement);
 
+  // give content dom the maximum possible size
+  var viewportSize = goog.dom.getViewportSize();
+  var contentSize = size.clone().scaleToFit(viewportSize);
+  goog.style.setSize(this.contentContainer, contentSize);
+
   this.draggerTopLeft = new goog.fx.Dragger(this.topLeftDom);
   this.draggerTopRight = new goog.fx.Dragger(this.topRightDom);
   this.draggerBottomLeft = new goog.fx.Dragger(this.bottomLeftDom);
@@ -48,7 +53,13 @@ imym.views.Rectangle = function(parent, position, size){
   goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
 
   this.perspectiveTransform = new imym.models.PerspectiveRectangle(this.contentContainer);
-  this.matchVertices();
+
+  this.transformRectangle( new goog.math.Rect(0, 0, size.width, size.height) );
+
+  goog.style.setPosition(this.topLeftDom, this.perspectiveTransform.topLeft().x, this.perspectiveTransform.topLeft().y);
+  goog.style.setPosition(this.topRightDom, this.perspectiveTransform.topRight().x, this.perspectiveTransform.topRight().y);
+  goog.style.setPosition(this.bottomLeftDom, this.perspectiveTransform.bottomLeft().x, this.perspectiveTransform.bottomLeft().y);
+  goog.style.setPosition(this.bottomRightDom, this.perspectiveTransform.bottomRight().x, this.perspectiveTransform.bottomRight().y);
 };
 goog.inherits(imym.views.Rectangle, goog.events.EventTarget);
 
@@ -63,12 +74,34 @@ imym.views.Rectangle.prototype.hide = function(){
 };
 
 
-imym.views.Rectangle.prototype.matchVertices = function(){
-  goog.style.setPosition(this.topLeftDom, this.perspectiveTransform.topLeft().x, this.perspectiveTransform.topLeft().y);
-  goog.style.setPosition(this.topRightDom, this.perspectiveTransform.topRight().x, this.perspectiveTransform.topRight().y);
-  goog.style.setPosition(this.bottomLeftDom, this.perspectiveTransform.bottomLeft().x, this.perspectiveTransform.bottomLeft().y);
-  goog.style.setPosition(this.bottomRightDom, this.perspectiveTransform.bottomRight().x, this.perspectiveTransform.bottomRight().y);
+imym.views.Rectangle.prototype.transformRectangle = function(rect){
+  this.transformTopLeft(rect.left, rect.top);
+  this.transformTopRight(rect.width, rect.top);
+  this.transformBottomLeft(rect.left, rect.height);
+  this.transformBottomRight(rect.width, rect.height);
+};
 
+
+imym.views.Rectangle.prototype.transformTopLeft = function(x, y){
+  this.perspectiveTransform.topLeft(x, y);
+  this.perspectiveTransform.update();
+};
+
+
+imym.views.Rectangle.prototype.transformTopRight = function(x, y){
+  this.perspectiveTransform.topRight(x, y);
+  this.perspectiveTransform.update();
+};
+
+
+imym.views.Rectangle.prototype.transformBottomLeft = function(x, y){
+  this.perspectiveTransform.bottomLeft(x, y);
+  this.perspectiveTransform.update();
+};
+
+
+imym.views.Rectangle.prototype.transformBottomRight = function(x, y){
+  this.perspectiveTransform.bottomRight(x, y);
   this.perspectiveTransform.update();
 };
 
@@ -91,21 +124,19 @@ imym.views.Rectangle.prototype.onDrag = function(e){
 
   switch(e.target) {
     case this.draggerTopLeft:
-    this.perspectiveTransform.topLeft(deltaX, deltaY);
+    this.transformTopLeft(deltaX, deltaY);
     break;
 
     case this.draggerTopRight:
-    this.perspectiveTransform.topRight(deltaX, deltaY);
+    this.transformTopRight(deltaX, deltaY);
     break;
 
     case this.draggerBottomLeft:
-    this.perspectiveTransform.bottomLeft(deltaX, deltaY);
+    this.transformBottomLeft(deltaX, deltaY);
     break;
 
     case this.draggerBottomRight:
-    this.perspectiveTransform.bottomRight(deltaX, deltaY);
+    this.transformBottomRight(deltaX, deltaY);
     break;
   }
-
-  this.matchVertices();
 };
