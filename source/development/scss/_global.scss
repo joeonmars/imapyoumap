@@ -54,6 +54,7 @@ $icon-layout:smart;
 $min_width: 768px;
 $min_height: 640px;
 
+$cursor_path: "/assets/cursor/";
 $images_path: "/assets/images/";
 
 $font_sans: "MyriadPro-Regular", sans-serif;
@@ -112,11 +113,6 @@ a{
   }
 }
 
-i{
-  display: inline-block;
-  vertical-align: middle; 
-}
-
 textarea{
   resize: none;
 }
@@ -142,11 +138,4 @@ textarea{
 .centerColumn{
   margin: 0 auto;
   max-width: 1280px;
-}
-
-.viewport{
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
 }

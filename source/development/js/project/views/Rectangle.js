@@ -73,7 +73,7 @@ goog.inherits(imym.views.Rectangle, goog.events.EventTarget);
 
 
 imym.views.Rectangle.prototype.show = function(show){
-
+  goog.style.showElement(this.domElement, show);
 };
 
 
@@ -93,6 +93,15 @@ imym.views.Rectangle.prototype.showControls = function(show){
   goog.style.showElement(this.topRightDom, show);
   goog.style.showElement(this.bottomLeftDom, show);
   goog.style.showElement(this.bottomRightDom, show);
+};
+
+
+imym.views.Rectangle.prototype.enable = function(enable){
+  if(enable === false) {
+    goog.dom.classes.add(this.domElement, 'disabled');
+  }else {
+    goog.dom.classes.remove(this.domElement, 'disabled');
+  }
 };
 
 

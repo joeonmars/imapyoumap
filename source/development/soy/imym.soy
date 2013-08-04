@@ -1,10 +1,41 @@
 {namespace imym.templates autoescape="false"}
 
 /**
- * Say Hello
+ * Main
  */
-{template .helloWorld}
-<div>
-	Hello World!
+{template .Main}
+<div id="main">
+	{call .SidePanel}{/call}
+	{call .Playground}{/call}
+</div>
+{/template}
+
+
+/**
+ * side panel
+ */
+{template .SidePanel}
+<div id="side-panel">
+	<div class="outer">
+		<div class="inner">
+		</div>
+	</div>
+</div>
+{/template}
+
+
+/**
+ * playground
+ */
+{template .Playground}
+<div id="playground">
+	<div class="toolsContainer">
+	</div>
+	<div class="outer">
+		<div class="inner">
+			<div class="content">
+			</div>
+		</div>
+	</div>
 </div>
 {/template}

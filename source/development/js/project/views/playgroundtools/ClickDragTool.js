@@ -49,7 +49,7 @@ imym.views.playgroundtools.ClickDragTool.prototype.getDraggedRect = function(e){
 
 
 imym.views.playgroundtools.ClickDragTool.prototype.onDown = function(e){
-  if(e.target.className !== 'outer') {
+  if(e.target !== e.currentTarget) {
     this.dragger.endDragCancel(e);
   }
 };

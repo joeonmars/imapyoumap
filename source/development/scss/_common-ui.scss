@@ -1,0 +1,50 @@
+.grab{
+   cursor: grab;
+   cursor: -moz-grab;
+   cursor: -webkit-grab;
+   cursor: url(#{$cursor_path}openhand.cur), default !important;
+
+   &.grabbing{
+     cursor: grabbing;
+     cursor: -moz-grabbing;
+     cursor: -webkit-grabbing;
+     cursor: url(#{$cursor_path}closehand.cur), default !important;
+   }
+}
+
+.rectangle{
+	position: absolute;
+
+	&.disabled{
+		pointer-events: none;
+	}
+
+	>.vertexContainer{
+		position: absolute;
+		width: 0;
+		height: 0;
+
+		>div{
+			position: absolute;
+			width: 10px;
+			height: 10px;
+			background: red;
+			cursor: pointer;
+			@include border-radius(100%);
+			@include translate(-5px, -5px);
+
+			&:hover, &.active{
+				background: lightgreen;
+			}
+		}
+	}
+
+	>.contentContainer{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(225, 0, 0, .2);
+	}
+}

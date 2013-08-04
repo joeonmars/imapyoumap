@@ -26,6 +26,9 @@ imym.main = function() {
 };
 
 imym.main.create = function(e) {
+	var mainFrag = soy.renderAsFragment(imym.templates.Main);
+	document.body.appendChild(mainFrag);
+
 	imym.main.controllers.navigationController = imym.controllers.NavigationController.getInstance();
 	imym.main.controllers.windowController = imym.controllers.WindowController.getInstance();
 
