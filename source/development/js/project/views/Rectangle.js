@@ -72,13 +72,8 @@ imym.views.Rectangle = function(parent, position, size){
 goog.inherits(imym.views.Rectangle, goog.events.EventTarget);
 
 
-imym.views.Rectangle.prototype.show = function(){
+imym.views.Rectangle.prototype.show = function(show){
 
-};
-
-
-imym.views.Rectangle.prototype.hide = function(){
-	
 };
 
 
@@ -90,6 +85,14 @@ imym.views.Rectangle.prototype.showOriginalRectangle = function(show){
     goog.style.setSize(this.domElement, 0, 0);
     goog.style.setStyle(this.domElement, 'outline', 'none');
   }
+};
+
+
+imym.views.Rectangle.prototype.showControls = function(show){
+  goog.style.showElement(this.topLeftDom, show);
+  goog.style.showElement(this.topRightDom, show);
+  goog.style.showElement(this.bottomLeftDom, show);
+  goog.style.showElement(this.bottomRightDom, show);
 };
 
 

@@ -83,8 +83,10 @@ imym.views.playgroundtools.ClickDragTool.prototype.onDragEnd = function(e){
   var width = draggedRect.width;
   var height = draggedRect.height;
 
-  if(width > 0 && height > 0) {
-    
+  var threshold = imym.views.playgroundtools.ClickDragTool.THRESHOLD;
+
+  if(width > threshold && height > threshold) {
+
     this.dispatchEvent({
       type: imym.views.Playground.EventType.CREATE_RECTANGLE,
       position: new goog.math.Coordinate(left, top),
@@ -94,3 +96,6 @@ imym.views.playgroundtools.ClickDragTool.prototype.onDragEnd = function(e){
   }
 
 };
+
+
+imym.views.playgroundtools.ClickDragTool.THRESHOLD = 10;
