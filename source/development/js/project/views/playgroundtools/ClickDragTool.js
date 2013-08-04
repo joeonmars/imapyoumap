@@ -37,6 +37,17 @@ imym.views.playgroundtools.ClickDragTool.prototype.draggerDefaultAction = functi
 };
 
 
+imym.views.playgroundtools.ClickDragTool.prototype.getDraggedRect = function(e){
+  var top = Math.min(e.dragger.startY + e.dragger.deltaY, e.dragger.startY);
+  var left = Math.min(e.dragger.startX + e.dragger.deltaX, e.dragger.startX);
+
+  var width = Math.abs(e.dragger.deltaX);
+  var height = Math.abs(e.dragger.deltaY);
+
+  return new goog.math.Rect(left, top, width, height);
+};
+
+
 imym.views.playgroundtools.ClickDragTool.prototype.onDown = function(e){
   if(e.target.className !== 'outer') {
     this.dragger.endDragCancel(e);
@@ -52,20 +63,34 @@ imym.views.playgroundtools.ClickDragTool.prototype.onBeforeDrag = function(e){
 
 
 imym.views.playgroundtools.ClickDragTool.prototype.onDrag = function(e){
-  goog.style.setSize(this.mockRectangleDom, e.dragger.deltaX, e.dragger.deltaY);
+  var draggedRect = this.getDraggedRect(e);
+  var top = draggedRect.top;
+  var left = draggedRect.left;
+  var width = draggedRect.width;
+  var height = draggedRect.height;
+
+  goog.style.setPosition(this.mockRectangleDom, left, top);
+  goog.style.setSize(this.mockRectangleDom, width, height);
 };
 
 
 imym.views.playgroundtools.ClickDragTool.prototype.onDragEnd = function(e){
   goog.dom.removeNode(this.mockRectangleDom);
 
-  if(Math.abs(e.dragger.deltaX) > 0 && Math.abs(e.dragger.deltaY) > 0) {
+  var draggedRect = this.getDraggedRect(e);
+  var top = draggedRect.top;
+  var left = draggedRect.left;
+  var width = draggedRect.width;
+  var height = draggedRect.height;
 
+  if(width > 0 && height > 0) {
+    
     this.dispatchEvent({
       type: imym.views.Playground.EventType.CREATE_RECTANGLE,
-      position: new goog.math.Coordinate(e.dragger.startX, e.dragger.startY),
-      size: new goog.math.Size(e.dragger.deltaX, e.dragger.deltaY)
+      position: new goog.math.Coordinate(left, top),
+      size: new goog.math.Size(width, height)
     });
-    
+
   }
+
 };
