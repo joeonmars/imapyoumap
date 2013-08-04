@@ -12,6 +12,8 @@ goog.require('goog.object');
 imym.views.Rectangle = function(parent, position, size){
   goog.base(this);
 
+  this.originalSize = size;
+
   this.domElement = goog.dom.createDom('div', 'rectangle', [
     this.contentContainer = goog.dom.createDom('div', 'contentContainer'),
   	this.vertexContainer = goog.dom.createDom('div', 'vertexContainer', [
@@ -23,7 +25,6 @@ imym.views.Rectangle = function(parent, position, size){
   	]);
 
   goog.style.setPosition(this.domElement, position);
-  goog.style.setSize(this.domElement, size);
 
   goog.dom.appendChild(parent, this.domElement);
 
@@ -32,34 +33,41 @@ imym.views.Rectangle = function(parent, position, size){
   var contentSize = size.clone().scaleToFit(viewportSize);
   goog.style.setSize(this.contentContainer, contentSize);
 
+  // set draggers
+  this.dragger = new goog.fx.Dragger(this.domElement);
+
   this.draggerTopLeft = new goog.fx.Dragger(this.topLeftDom);
   this.draggerTopRight = new goog.fx.Dragger(this.topRightDom);
   this.draggerBottomLeft = new goog.fx.Dragger(this.bottomLeftDom);
   this.draggerBottomRight = new goog.fx.Dragger(this.bottomRightDom);
 
-  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.START, this.onDragStart, false, this);
-  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.START, this.onDragStart, false, this);
-  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.START, this.onDragStart, false, this);
-  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.START, this.onDragStart, false, this);
+  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.START, this.onDragVertexStart, false, this);
+  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.START, this.onDragVertexStart, false, this);
+  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.START, this.onDragVertexStart, false, this);
+  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.START, this.onDragVertexStart, false, this);
 
-  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
-  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
-  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
-  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
+  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.END, this.onDragVertexEnd, false, this);
+  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.END, this.onDragVertexEnd, false, this);
+  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.END, this.onDragVertexEnd, false, this);
+  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.END, this.onDragVertexEnd, false, this);
 
-  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
-  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
-  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
-  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
+  goog.events.listen(this.draggerTopLeft, goog.fx.Dragger.EventType.DRAG, this.onDragVertex, false, this);
+  goog.events.listen(this.draggerTopRight, goog.fx.Dragger.EventType.DRAG, this.onDragVertex, false, this);
+  goog.events.listen(this.draggerBottomLeft, goog.fx.Dragger.EventType.DRAG, this.onDragVertex, false, this);
+  goog.events.listen(this.draggerBottomRight, goog.fx.Dragger.EventType.DRAG, this.onDragVertex, false, this);
 
   this.perspectiveTransform = new imym.models.PerspectiveRectangle(this.contentContainer);
 
-  this.transformRectangle( new goog.math.Rect(0, 0, size.width, size.height) );
+  this.transformRectangle( new goog.math.Rect(0, 0, this.originalSize.width, this.originalSize.height) );
 
+  // set initial vertices dom positions
   goog.style.setPosition(this.topLeftDom, this.perspectiveTransform.topLeft().x, this.perspectiveTransform.topLeft().y);
   goog.style.setPosition(this.topRightDom, this.perspectiveTransform.topRight().x, this.perspectiveTransform.topRight().y);
   goog.style.setPosition(this.bottomLeftDom, this.perspectiveTransform.bottomLeft().x, this.perspectiveTransform.bottomLeft().y);
   goog.style.setPosition(this.bottomRightDom, this.perspectiveTransform.bottomRight().x, this.perspectiveTransform.bottomRight().y);
+
+  // for debug only
+  this.showOriginalRectangle(true);
 };
 goog.inherits(imym.views.Rectangle, goog.events.EventTarget);
 
@@ -71,6 +79,17 @@ imym.views.Rectangle.prototype.show = function(){
 
 imym.views.Rectangle.prototype.hide = function(){
 	
+};
+
+
+imym.views.Rectangle.prototype.showOriginalRectangle = function(show){
+  if(show === true) {
+    goog.style.setSize(this.domElement, this.originalSize);
+    goog.style.setStyle(this.domElement, 'outline', '1px solid red');
+  }else {
+    goog.style.setSize(this.domElement, 0, 0);
+    goog.style.setStyle(this.domElement, 'outline', 'none');
+  }
 };
 
 
@@ -106,19 +125,23 @@ imym.views.Rectangle.prototype.transformBottomRight = function(x, y){
 };
 
 
-imym.views.Rectangle.prototype.onDragStart = function(e){
+imym.views.Rectangle.prototype.onDragVertexStart = function(e){
   var vertexDom = e.target.target;
   goog.dom.classes.add(vertexDom, 'active');
+
+  this.dragger.setEnabled(false);
 };
 
 
-imym.views.Rectangle.prototype.onDragEnd = function(e){
+imym.views.Rectangle.prototype.onDragVertexEnd = function(e){
   var vertexDom = e.target.target;
   goog.dom.classes.remove(vertexDom, 'active');
+
+  this.dragger.setEnabled(true);
 };
 
 
-imym.views.Rectangle.prototype.onDrag = function(e){
+imym.views.Rectangle.prototype.onDragVertex = function(e){
   var deltaX = e.dragger.deltaX;
   var deltaY = e.dragger.deltaY;
 
