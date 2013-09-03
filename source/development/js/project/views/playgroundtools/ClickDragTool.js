@@ -7,33 +7,57 @@ goog.require('goog.object');
 goog.require('goog.fx.Dragger');
 goog.require('goog.math.Coordinate');
 goog.require('goog.math.Size');
+goog.require('imym.views.playgroundtools.Tool');
 
 /**
  * @constructor
  */
 imym.views.playgroundtools.ClickDragTool = function(playground, parentDom, dragDom){
-  goog.base(this);
-
-  this.setParentEventTarget(playground);
+  goog.base(this, playground, imym.main.controllers.modeController.modes.clickDragMode);
 
   this.domElement = goog.dom.createDom('div', {id: 'click-drag-tool'});
   goog.dom.appendChild(parentDom, this.domElement);
+
+  this.dragDom = dragDom;
 
   this.mockRectangleDom = new goog.dom.createDom('div', 'mockRectangle');
 
   this.dragger = new goog.fx.Dragger(dragDom);
   this.dragger.defaultAction = this.draggerDefaultAction;
-
-  goog.events.listen(dragDom, goog.events.EventType.MOUSEDOWN, this.onDown, false, this);
-  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.BEFOREDRAG, this.onBeforeDrag, false, this);
-  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
-  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
 };
-goog.inherits(imym.views.playgroundtools.ClickDragTool, goog.events.EventTarget);
+goog.inherits(imym.views.playgroundtools.ClickDragTool, imym.views.playgroundtools.Tool);
 
 
 imym.views.playgroundtools.ClickDragTool.prototype.draggerDefaultAction = function(x, y){
 
+};
+
+
+imym.views.playgroundtools.ClickDragTool.prototype.activate = function(){
+  goog.base(this, 'activate');
+  
+  goog.events.listen(this.dragDom, goog.events.EventType.MOUSEDOWN, this.onDown, false, this);
+  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.BEFOREDRAG, this.onBeforeDrag, false, this);
+  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
+  goog.events.listen(this.dragger, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
+
+  this.dragger.setEnabled(true);
+};
+
+
+imym.views.playgroundtools.ClickDragTool.prototype.deactivate = function(){
+  goog.base(this, 'deactivate');
+
+  if(this.dragger.isDragging()) {
+    goog.dom.removeNode(this.mockRectangleDom);
+  }
+
+  goog.events.unlisten(this.dragDom, goog.events.EventType.MOUSEDOWN, this.onDown, false, this);
+  goog.events.unlisten(this.dragger, goog.fx.Dragger.EventType.BEFOREDRAG, this.onBeforeDrag, false, this);
+  goog.events.unlisten(this.dragger, goog.fx.Dragger.EventType.DRAG, this.onDrag, false, this);
+  goog.events.unlisten(this.dragger, goog.fx.Dragger.EventType.END, this.onDragEnd, false, this);
+
+  this.dragger.setEnabled(false);
 };
 
 

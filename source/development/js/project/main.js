@@ -8,6 +8,7 @@ goog.require('soy');
 goog.require('imym.templates');
 goog.require('imym.controllers.NavigationController');
 goog.require('imym.controllers.WindowController');
+goog.require('imym.controllers.ModeController');
 goog.require('imym.views.Playground');
 
 
@@ -30,7 +31,11 @@ imym.main.create = function(e) {
 	document.body.appendChild(mainFrag);
 
 	imym.main.controllers.navigationController = imym.controllers.NavigationController.getInstance();
+
 	imym.main.controllers.windowController = imym.controllers.WindowController.getInstance();
+	
+	imym.main.controllers.modeController = imym.controllers.ModeController.getInstance();
+	imym.main.controllers.modeController.init();
 
 	imym.main.views.playground = new imym.views.Playground();
 };

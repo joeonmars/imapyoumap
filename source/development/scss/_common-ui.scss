@@ -15,8 +15,10 @@
 .rectangle{
 	position: absolute;
 
-	&.disabled{
-		pointer-events: none;
+	&.active{
+		>.contentContainer{
+			background: rgba(0, 225, 0, .2);
+		}
 	}
 
 	>.vertexContainer{

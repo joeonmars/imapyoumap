@@ -19,12 +19,12 @@ time, mark, audio, video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
   font: inherit;
+  font-size: 100%;
   vertical-align: baseline;
 }
 
-body {
+html {
   line-height: 1;
 }
 
@@ -154,7 +154,6 @@ textarea {
   background: -webkit-linear-gradient(left, #595968 50%, #4f4f5d 50%);
   background: -moz-linear-gradient(left, #595968 50%, #4f4f5d 50%);
   background: -o-linear-gradient(left, #595968 50%, #4f4f5d 50%);
-  background: -ms-linear-gradient(left, #595968 50%, #4f4f5d 50%);
   background: linear-gradient(left, #595968 50%, #4f4f5d 50%);
 }
 
@@ -187,8 +186,8 @@ textarea {
 .rectangle {
   position: absolute;
 }
-.rectangle.disabled {
-  pointer-events: none;
+.rectangle.active > .contentContainer {
+  background: rgba(0, 225, 0, 0.2);
 }
 .rectangle > .vertexContainer {
   position: absolute;

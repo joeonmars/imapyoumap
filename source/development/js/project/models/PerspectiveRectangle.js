@@ -20,6 +20,26 @@ imym.models.PerspectiveRectangle = function(domElement){
 goog.inherits(imym.models.PerspectiveRectangle, goog.events.EventTarget);
 
 
+imym.models.PerspectiveRectangle.prototype.getTopLeft = function(){
+	return this.transform.topLeft;
+};
+
+
+imym.models.PerspectiveRectangle.prototype.getBottomLeft = function(){
+	return this.transform.bottomLeft;
+};
+
+
+imym.models.PerspectiveRectangle.prototype.getTopRight = function(){
+	return this.transform.topRight;
+};
+
+
+imym.models.PerspectiveRectangle.prototype.getBottomRight = function(){
+	return this.transform.bottomRight;
+};
+
+
 imym.models.PerspectiveRectangle.prototype.topLeft = function(x, y){
 	if(goog.isNumber(x) || goog.isNumber(y)) {
 		if(goog.isNumber(x)) this.transform.topLeft.x = x;
